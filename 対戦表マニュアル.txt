@@ -1,0 +1,221 @@
+****************************
+*
+*	プロ野球の対戦表
+*
+*	作成者：山本 涼太郎
+*	作成日：2019//
+*
+****************************
+
+■	製品説明
+
+	・MVCモデルを適用したプロ野球対戦表です。
+
+■	特徴
+	・MVCモデルを適用。
+	・DBはpostgreSQLを使用
+	・SpringフレームワークとjQuery、JavaScript、Maven、ApachePOIを使用
+
+■	操作説明
+
+	ログインURL
+	http://localhost:8080/baseball/top
+
+	・日付を選択し、その日の対戦カード一覧を表示します。
+	・チーム打率や防御率などを計算してどっちのチームが勝つのか独自指数を表示します。
+	・対戦カード一覧やチームの防御率はExcelファイルからDBに挿入できるようにします。
+	https://baseball-data.com/team/hitter.html	このWEBサイトより引用
+	・日付選択時にその日付のデータがない場合はエラーを表示します。
+	・勝つ確率もデータがない場合はエラーを表示します。
+
+	・打率：ヒットが出る確率。高いほど良い。
+	・防御率：点が取られる確率（指数）。低いほど良い。
+	・独自勝利指数算出方法：勝利指数＝チーム打率÷防御率×10
+
+■	開発環境
+		OS : Windows10
+		DB : postgreSQL
+	Server : tomcat8.5
+
+■	ディレクトリ構成
+
+■	データベース定義
+	データベース名：spring_baseball
+
+	テーブル名：COMPETITION
+	キー		列名		項目名			型				制約
+	〇		ID		対戦表のID		integer
+			DATE	日付				date			not null
+			CARD1	第一カード			varchar(40)
+			CARD2	第二カード			varchar(40)
+			CARD3	第三カード			varchar(40)
+			CARD4	第四カード			varchar(40)
+			CARD5	第五カード			varchar(40)
+			CARD6	第六カード			varchar(40)
+
+	テーブル名：GIANTS_PROPERTY
+	キー	列名			項目名				型				制約
+	〇		ID				ID			integer
+			BATTING_AVE		打率			numeric			not null
+			DEFENSE_RATE	防御率		numeric			not null
+
+	テーブル名：TIGERS_PROPERTY
+	キー	列名			項目名				型				制約
+	〇		ID				ID			integer
+			BATTING_AVE		打率			numeric			not null
+			DEFENSE_RATE	防御率		numeric			not null
+
+	テーブル名：DRAGONS_PROPERTY
+	キー	列名			項目名				型				制約
+	〇		ID				ID			integer
+			BATTING_AVE		打率			numeric			not null
+			DEFENSE_RATE	防御率		numeric			not null
+
+	テーブル名：SWALLOWS_PROPERTY
+	キー	列名			項目名				型				制約
+	〇		ID				ID			integer
+			BATTING_AVE		打率			numeric			not null
+			DEFENSE_RATE	防御率		numeric			not null
+
+	テーブル名：BAYSTARS_PROPERTY
+	キー	列名			項目名				型				制約
+	〇		ID				ID			integer
+			BATTING_AVE		打率			numeric			not null
+			DEFENSE_RATE	防御率		numeric			not null
+
+	テーブル名：CARP_PROPERTY
+	キー	列名			項目名				型				制約
+	〇		ID				ID			integer
+			BATTING_AVE		打率			numeric			not null
+			DEFENSE_RATE	防御率		numeric			not null
+
+	テーブル名：HAWKS_PROPERTY
+	キー	列名			項目名				型				制約
+	〇		ID				ID			integer
+			BATTING_AVE		打率			numeric			not null
+			DEFENSE_RATE	防御率		numeric			not null
+
+	テーブル名：LIONS_PROPERTY
+	キー	列名			項目名				型				制約
+	〇		ID				ID			integer
+			BATTING_AVE		打率			numeric			not null
+			DEFENSE_RATE	防御率		numeric			not null
+
+	テーブル名：FIGHTERS_PROPERTY
+	キー	列名			項目名				型				制約
+	〇		ID				ID			integer
+			BATTING_AVE		打率			numeric			not null
+			DEFENSE_RATE	防御率		numeric			not null
+
+	テーブル名：EAGLES_PROPERTY
+	キー	列名			項目名				型				制約
+	〇		ID				ID			integer
+			BATTING_AVE		打率			numeric			not null
+			DEFENSE_RATE	防御率		numeric			not null
+
+	テーブル名：MARINES_PROPERTY
+	キー	列名			項目名				型				制約
+	〇		ID				ID			integer
+			BATTING_AVE		打率			numeric			not null
+			DEFENSE_RATE	防御率		numeric			not null
+
+	テーブル名：BUFFALOES_PROPERTY
+	キー	列名			項目名				型				制約
+	〇		ID				ID			integer
+			BATTING_AVE		打率			numeric			not null
+			DEFENSE_RATE	防御率		numeric			not null
+
+■	DB作成SQL文
+	drop database spring_baseball;
+	create database spring_baseball;
+
+■	テーブル作成SQL文
+	\c spring_baseball;
+
+	create table COMPETITION (
+		ID integer primary key,
+		DATE date not null,
+		CARD1 varchar(40),
+		CARD2 varchar(40),
+		CARD3 varchar(40),
+		CARD4 varchar(40),
+		CARD5 varchar(40),
+		CARD6 varchar(40)
+	);
+
+	create table GIANTS_PROPERTY (
+		ID integer primary key,
+		BATTING_AVE numeric not null,
+		DEFENSE_RATE numeric not null
+	);
+
+	create table TIGERS_PROPERTY (
+		ID integer primary key,
+		BATTING_AVE numeric not null,
+		DEFENSE_RATE numeric not null
+	);
+
+	create table DRAGONS_PROPERTY (
+		ID integer primary key,
+		BATTING_AVE numeric not null,
+		DEFENSE_RATE numeric not null
+	);
+
+	create table SWALLOWS_PROPERTY (
+		ID integer primary key,
+		BATTING_AVE numeric not null,
+		DEFENSE_RATE numeric not null
+	);
+
+	create table BAYSTARS_PROPERTY (
+		ID integer primary key,
+		BATTING_AVE numeric not null,
+		DEFENSE_RATE numeric not null
+	);
+
+	create table CARP_PROPERTY (
+		ID integer primary key,
+		BATTING_AVE numeric not null,
+		DEFENSE_RATE numeric not null
+	);
+
+	create table HAWKS_PROPERTY (
+		ID integer primary key,
+		BATTING_AVE numeric not null,
+		DEFENSE_RATE numeric not null
+	);
+
+	create table LIONS_PROPERTY (
+		ID integer primary key,
+		BATTING_AVE numeric not null,
+		DEFENSE_RATE numeric not null
+	);
+
+	create table FIGHTERS_PROPERTY (
+		ID integer primary key,
+		BATTING_AVE numeric not null,
+		DEFENSE_RATE numeric not null
+	);
+
+	create table EAGLES_PROPERTY (
+		ID integer primary key,
+		BATTING_AVE numeric not null,
+		DEFENSE_RATE numeric not null
+	);
+
+	create table MARINES_PROPERTY (
+		ID integer primary key,
+		BATTING_AVE numeric not null,
+		DEFENSE_RATE numeric not null
+	);
+
+	create table BUFFALOES_PROPERTY (
+		ID integer primary key,
+		BATTING_AVE numeric not null,
+		DEFENSE_RATE numeric not null
+	);
+
+	insert into COMPETITION values(1, 2019-08-19, GIANTS-TIGERS, DRAGONS-SWALLOWS,
+	BAYSTARS-CARP, HAWKS-LIONS, FIGHTERS-EAGLES, MARINES-BUFFALOES);
+
+	insert into GIANTS values(1,
